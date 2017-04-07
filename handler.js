@@ -2,72 +2,47 @@
 
 module.exports.hello = (event, context, callback) => {
 
-    var numbers = [4, 75, 16, 25, 55,28,14,15,26];
-    var x = 5;
+    var numbers = [4, 75, 16, 25,58,65,12,48,59,65];
+    var x = 4;
 
-    //75 55 17 -> 66
-    var getNumMayor = function (numArray) {
+    console.log('Array Numbers',numbers);
+    console.log('Position',x);
 
-        var mayorArray = [];
-        var mayorArray2 = [];
-        var menorArray = [];
-        numArray.forEach(function (item, index) {
 
-            var mayorArray2 = [];
-            var menorArray = [];
+    var getMayorByindex = function (number,x){
 
-            mayorArray.forEach(function (item2, index2) {
-                if (item2 >= item) {
-                    mayorArray2.push(item2);
-                } else {
-                    menorArray.push(item2);
+        var i  = 0;
+        var result;
+
+        var getNumMayor = function (numArray) {
+            var mayor = 0;
+            var indexMayor = 0;
+            numArray.forEach(function (item, index) {
+                if (item > mayor) {
+                    mayor = item;
+                    indexMayor = index;
                 }
             });
-            mayorArray2.push(item);
-            mayorArray = mayorArray2.concat(menorArray);
 
-        });
-        //mayorArray.reverse();
+            return [indexMayor,mayor];
+        };
 
-
-        return mayorArray;
-    };
-
-    Array.prototype.diff = function (a) {
-        return this.filter(function (i) {
-            return a.indexOf(i) < 0;
-        });
-    };
-
-    //console.log([1,2,3,4,5,6].diff( [3,4,5] ));
-    var result = null;
-    var conditional = true;
-
-    while (conditional) {
-        var numberMayor = getNumMayor(numbers);
-        console.log(numberMayor, 'hola');
-        if (numberMayor[x - 1] != undefined) {
-            result = numberMayor[x - 1];
-            conditional = false;
-        } else {
-            numbers = numbers.diff(numberMayor);
-            x = x - numberMayor.length;
+        for (i = 1; i <= x; i++) {
+            var numberMayor = getNumMayor(numbers);
+            if(x == i){
+                result = numberMayor[1];
+            }else{
+                numbers.splice(numberMayor[0],1);
+            }
         }
+
+        return result;
+
     }
 
-    console.log(result);
+    var input = getMayorByindex(numbers,x);
 
+    console.log(input);
 
-    const response = {
-        statusCode: 200,
-        body: JSON.stringify({
-            message: 'Go Serverless v1.0! Your function executed successfully!',
-            input: event,
-        }),
-    };
-
-    callback(null, response);
-
-    // Use this code if you don't use the http event with the LAMBDA-PROXY integration
-    // callback(null, { message: 'Go Serverless v1.0! Your function executed successfully!', event });
+    callback(null, { message: 'this result is ' + input });
 };
