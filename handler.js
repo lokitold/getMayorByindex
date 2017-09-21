@@ -2,8 +2,8 @@
 
 module.exports.hello = (event, context, callback) => {
 
-    var numbers = [4, 75, 16, 25,58,65,12,48,59,65];
-    var x = 4;
+    var numbers = [4, -75, 16, 25,58,-65,12,48,59,-65];
+    var x = 1;
 
     console.log('Array Numbers',numbers);
     console.log('Position',x);
